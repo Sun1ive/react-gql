@@ -1,16 +1,17 @@
 module.exports = {
   root: true,
   parserOptions: {
-    parser: 'babel-eslint',
+    parser: "babel-eslint",
     ecmaVersion: 2017,
-    sourceType: 'module',
+    sourceType: "module"
   },
   env: {
-    node: true,
+    node: true
   },
-  extends: ['airbnb-base'],
-  plugins: ['node'],
+  extends: ["airbnb-base"],
+  plugins: ["node", "prettier"],
   rules: {
-    'prefer-promise-reject-errors': 0,
-  },
+    "prefer-promise-reject-errors": 0,
+    singleQuote: true
+  }
 };
