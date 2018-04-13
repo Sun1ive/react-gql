@@ -6,25 +6,10 @@ const {
   GraphQLList,
   GraphQLSchema,
 } = require('graphql');
+const rnd = require('rand-token');
+
 
 const db = require('../models');
-
-const books = [
-  { name: 'Hello1', genre: 'Sci-Fi', id: '1', authorId: '1' },
-  { name: 'World', genre: 'Fantasy', id: '2', authorId: '2' },
-  { name: 'There', genre: 'Life', id: '3', authorId: '3' },
-  { name: 'Hello2', genre: 'Sci-Fi', id: '1', authorId: '1' },
-  { name: 'World', genre: 'Fantasy', id: '2', authorId: '2' },
-  { name: 'There', genre: 'Life', id: '3', authorId: '3' },
-  { name: 'Hello3', genre: 'Sci-Fi', id: '1', authorId: '1' },
-  { name: 'World', genre: 'Fantasy', id: '2', authorId: '2' },
-  { name: 'There', genre: 'Life', id: '3', authorId: '3' },
-];
-const authors = [
-  { name: 'Alex', age: 33, id: '1' },
-  { name: 'Anna', age: 55, id: '2' },
-  { name: 'John', age: 22, id: '3' },
-];
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
@@ -100,9 +85,11 @@ const Mutation = new GraphQLObjectType({
         age: { type: GraphQLInt },
       },
       resolve(parent, args) {
+        console.log('---', rnd.generate(16));
         const author = db.Author.create({
           name: args.name,
           age: args.age,
+          id: rnd.generate(16),
         });
         return author;
       },

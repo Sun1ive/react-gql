@@ -5,7 +5,7 @@ module.exports = {
     node: true,
   },
   plugins: ['node'],
-  extends: ['airbnb-base', 'prettier', 'plugin:node/recommended'],
+  extends: ['airbnb-base', 'plugin:node/recommended'],
   rules: {
     'linebreak-style': 0,
     'no-param-reassign': [2, { props: false }],
