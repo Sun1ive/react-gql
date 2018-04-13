@@ -7,6 +7,8 @@ const {
   GraphQLSchema,
 } = require('graphql');
 
+const db = require('../models');
+
 const books = [
   { name: 'Hello1', genre: 'Sci-Fi', id: '1', authorId: '1' },
   { name: 'World', genre: 'Fantasy', id: '2', authorId: '2' },
@@ -75,19 +77,56 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve(parent, args) {
         // return books;
+        return Promise.resolve(db.Book.findAll());
       },
     },
     authors: {
       type: new GraphQLList(AuthorType),
       resolve(parent, args) {
         // return authors;
+        return Promise.resolve(db.Author.findAll());
       },
     },
   },
 });
 
-const Mutation = new GraphQLObjectType({});
+const Mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: { type: GraphQLString },
+        age: { type: GraphQLInt },
+      },
+      resolve(parent, args) {
+        const author = db.Author.create({
+          name: args.name,
+          age: args.age,
+        });
+        return author;
+      },
+    },
+    addBook: {
+      type: BookType,
+      args: {
+        name: { type: GraphQLString },
+        genre: { type: GraphQLString },
+        authorId: { type: GraphQLID },
+      },
+      resolve(parent, args) {
+        const book = db.Book.create({
+          name: args.name,
+          genre: args.genre,
+          authorId: args.authorId,
+        });
+        return book;
+      },
+    },
+  },
+});
 
 module.exports = new GraphQLSchema({
   query: RootQuery,
+  mutation: Mutation,
 });

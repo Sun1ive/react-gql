@@ -8,7 +8,6 @@ const db = require('./models');
 
 const app = express();
 
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
@@ -22,9 +21,10 @@ app.use(
   }),
 );
 
-db
-  .sequelize
+db.sequelize
+  // .sync({ force: true })
   .sync()
-  .then(() => app.listen(config.port, () => console.log('Server is running at', config.port)))
-  .catch(e => console.log(e))
-
+  .then(() =>
+    app.listen(config.port, () => console.log('DB is sync and server is running at', config.port)),
+  )
+  .catch(e => console.log(e));
