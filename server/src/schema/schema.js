@@ -3,19 +3,20 @@ const {
   GraphQLString,
   GraphQLID,
   GraphQLInt,
+  GraphQLList,
   GraphQLSchema
 } = require('graphql');
 
 const books = [
-  { name: 'Hello', genre: 'Sci-Fi', id: '1', authorId: '1' },
+  { name: 'Hello1', genre: 'Sci-Fi', id: '1', authorId: '1' },
   { name: 'World', genre: 'Fantasy', id: '2', authorId: '2' },
   { name: 'There', genre: 'Life', id: '3', authorId: '3' },
-  { name: 'Hello', genre: 'Sci-Fi', id: '1', authorId: '1' },
+  { name: 'Hello2', genre: 'Sci-Fi', id: '1', authorId: '1' },
   { name: 'World', genre: 'Fantasy', id: '2', authorId: '2' },
   { name: 'There', genre: 'Life', id: '3', authorId: '3' },
-  { name: 'Hello', genre: 'Sci-Fi', id: '1', authorId: '1' },
+  { name: 'Hello3', genre: 'Sci-Fi', id: '1', authorId: '1' },
   { name: 'World', genre: 'Fantasy', id: '2', authorId: '2' },
-  { name: 'There', genre: 'Life', id: '3', authorId: '3' },
+  { name: 'There', genre: 'Life', id: '3', authorId: '3' }
 ];
 const authors = [
   { name: 'Alex', age: 33, id: '1' },
@@ -43,7 +44,13 @@ const AuthorType = new GraphQLObjectType({
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
-    age: { type: GraphQLInt }
+    age: { type: GraphQLInt },
+    books: {
+      type: new GraphQLList(BookType),
+      resolve(parent, args) {
+        return books.filter(book => book.authorId === parent.id);
+      }
+    }
   })
 });
 
