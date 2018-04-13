@@ -1,17 +1,15 @@
+
 module.exports = {
   root: true,
-  parserOptions: {
-    parser: "babel-eslint",
-    ecmaVersion: 2017,
-    sourceType: "module"
-  },
   env: {
-    node: true
+    node: true,
   },
-  extends: ["airbnb-base"],
-  plugins: ["node", "prettier"],
+  plugins: ['node'],
+  extends: ['airbnb-base', 'prettier', 'plugin:node/recommended'],
   rules: {
-    "prefer-promise-reject-errors": 0,
-    singleQuote: true
-  }
+    'linebreak-style': 0,
+    'no-param-reassign': [2, { props: false }],
+    'node/no-unsupported-features': 0,
+    'no-underscore-dangle': 0,
+  },
 };
