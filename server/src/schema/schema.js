@@ -8,8 +8,7 @@ const {
 } = require('graphql');
 const rnd = require('rand-token');
 
-
-const db = require('../models');
+const { Book, Author } = require('../models');
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
@@ -62,14 +61,14 @@ const RootQuery = new GraphQLObjectType({
       type: new GraphQLList(BookType),
       resolve(parent, args) {
         // return books;
-        return Promise.resolve(db.Book.findAll());
+        return Promise.resolve(Book.findAll());
       },
     },
     authors: {
       type: new GraphQLList(AuthorType),
       resolve(parent, args) {
         // return authors;
-        return Promise.resolve(db.Author.findAll());
+        return Promise.resolve(Author.findAll());
       },
     },
   },
@@ -86,10 +85,10 @@ const Mutation = new GraphQLObjectType({
       },
       resolve(parent, args) {
         console.log('---', rnd.generate(16));
-        const author = db.Author.create({
+        const author = Author.create({
           name: args.name,
           age: args.age,
-          id: rnd.generate(16),
+          id: rnd.generate(32),
         });
         return author;
       },
@@ -102,7 +101,7 @@ const Mutation = new GraphQLObjectType({
         authorId: { type: GraphQLID },
       },
       resolve(parent, args) {
-        const book = db.Book.create({
+        const book = Book.create({
           name: args.name,
           genre: args.genre,
           authorId: args.authorId,

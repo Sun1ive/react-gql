@@ -25,6 +25,5 @@ db.sequelize
   // .sync({ force: true })
   .sync()
   .then(() =>
-    app.listen(config.port, () => console.log('DB is sync and server is running at', config.port)),
-  )
+    app.listen(config.port, () => console.log('DB is sync and server is running at', config.port)))
   .catch(e => console.log(e));

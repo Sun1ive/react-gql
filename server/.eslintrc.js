@@ -1,4 +1,3 @@
-
 module.exports = {
   root: true,
   env: {
@@ -11,5 +10,6 @@ module.exports = {
     'no-param-reassign': [2, { props: false }],
     'node/no-unsupported-features': 0,
     'no-underscore-dangle': 0,
+    'no-console': 0,
   },
 };
