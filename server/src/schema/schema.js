@@ -56,7 +56,8 @@ const RootQuery = new GraphQLObjectType({
     },
     authors: {
       type: new GraphQLList(AuthorType),
-      resolve: () => authors,
+      // resolve: () => authors,
+      resolve: () => Author.findAll(),
     },
     author: {
       type: AuthorType,
@@ -70,6 +71,30 @@ const RootQuery = new GraphQLObjectType({
   },
 });
 
+const mutation = new GraphQLObjectType({
+  name: 'Mutation',
+  fields: {
+    addAuthor: {
+      type: AuthorType,
+      args: {
+        name: {
+          type: GraphQLString,
+        },
+        age: {
+          type: GraphQLInt,
+        },
+      },
+      resolve: (root, args) =>
+        Author.create({
+          name: args.name,
+          age: args.age,
+          id: rnd.generate(33),
+        }),
+    },
+  },
+});
+
 export default new GraphQLSchema({
   query: RootQuery,
+  mutation,
 });
