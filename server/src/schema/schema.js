@@ -10,17 +10,16 @@ import rnd from 'rand-token';
 
 import { Book, Author } from '../models';
 
-import { books, authors } from '../data';
-
 const BookType = new GraphQLObjectType({
   name: 'Book',
   fields: () => ({
     id: { type: GraphQLID },
     name: { type: GraphQLString },
     genre: { type: GraphQLString },
+    authorId: { type: GraphQLString },
     author: {
       type: AuthorType,
-      resolve: (root, args) => authors.find(author => author.id === root.authorId),
+      resolve: root => Author.findById(root.authorId),
     },
   }),
 });
@@ -33,7 +32,7 @@ const AuthorType = new GraphQLObjectType({
     age: { type: GraphQLInt },
     books: {
       type: new GraphQLList(BookType),
-      resolve: root => books.filter(book => book.authorId === root.id),
+      resolve: root => Book.findAll({ where: { authorId: parent.id } }),
     },
   }),
 });
@@ -43,7 +42,7 @@ const RootQuery = new GraphQLObjectType({
   fields: {
     books: {
       type: new GraphQLList(BookType),
-      resolve: () => books,
+      resolve: () => Book.findAll(),
     },
     book: {
       type: BookType,
@@ -52,7 +51,7 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLID,
         },
       },
-      resolve: (root, args) => books.find(book => book.id === args.id),
+      resolve: (root, args) => Book.findById(args.id),
     },
     authors: {
       type: new GraphQLList(AuthorType),
@@ -66,7 +65,7 @@ const RootQuery = new GraphQLObjectType({
           type: GraphQLID,
         },
       },
-      resolve: (root, args) => authors.find(author => author.id === args.id),
+      resolve: (root, args) => Author.findById(args.id),
     },
   },
 });
@@ -89,6 +88,26 @@ const mutation = new GraphQLObjectType({
           name: args.name,
           age: args.age,
           id: rnd.generate(33),
+        }),
+    },
+    addBook: {
+      type: BookType,
+      args: {
+        name: {
+          type: GraphQLString,
+        },
+        genre: {
+          type: GraphQLString,
+        },
+        authorId: {
+          type: GraphQLID,
+        },
+      },
+      resolve: (root, args) =>
+        Book.create({
+          name: args.name,
+          genre: args.genre,
+          authorId: args.authorId,
         }),
     },
   },
