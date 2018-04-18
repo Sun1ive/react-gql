@@ -1,10 +1,10 @@
-const express = require('express');
-const graphqlHTTP = require('express-graphql');
-const schema = require('./schema/schema');
-const cors = require('cors');
-const morgan = require('morgan');
-const config = require('./config');
-const db = require('./models');
+import express from 'express';
+import graphqlHTTP from 'express-graphql';
+import schema from './schema/schema';
+import cors from 'cors';
+import morgan from 'morgan';
+import config from './config';
+import db from './models';
 
 const app = express();
 
@@ -25,5 +25,6 @@ db.sequelize
   // .sync({ force: true })
   .sync()
   .then(() =>
-    app.listen(config.port, () => console.log('DB is sync and server is running at', config.port)))
+    app.listen(config.port, () => console.log('DB is sync and server is running at', config.port)),
+  )
   .catch(e => console.log(e));
