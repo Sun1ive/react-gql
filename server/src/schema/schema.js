@@ -10,23 +10,7 @@ import rnd from 'rand-token';
 
 import { Book, Author } from '../models';
 
-const books = [
-  {
-    name: 'Wind of the wind',
-    genre: 'Fantasy',
-    id: 1,
-  },
-  {
-    name: 'Call of the wild',
-    genre: 'Fantasy',
-    id: 2,
-  },
-  {
-    name: 'Savage roar',
-    genre: 'SciFi',
-    id: 3,
-  },
-];
+import { books, authors } from '../data';
 
 const BookType = new GraphQLObjectType({
   name: 'Book',
@@ -43,6 +27,11 @@ const RootQuery = new GraphQLObjectType({
     books: {
       type: new GraphQLList(BookType),
       resolve: () => books,
+    },
+    book: {
+      type: BookType,
+      args: { id: { type: GraphQLInt } },
+      resolve: (root, args) => books.find(book => book.id === args.id),
     },
   },
 });
