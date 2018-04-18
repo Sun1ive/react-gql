@@ -3,16 +3,19 @@ export const books = [
     name: 'Wind of the wind',
     genre: 'Fantasy',
     id: '1',
+    authorId: '3',
   },
   {
     name: 'Call of the wild',
     genre: 'Fantasy',
     id: '2',
+    authorId: '1',
   },
   {
     name: 'Savage roar',
     genre: 'SciFi',
     id: '3',
+    authorId: '2',
   },
 ];
 export const authors = [
