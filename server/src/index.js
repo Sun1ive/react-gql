@@ -1,8 +1,8 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
-import schema from './schema/schema';
-import cors from 'cors';
 import morgan from 'morgan';
+import cors from 'cors';
+import schema from './schema/schema';
 import config from './config';
 import db from './models';
 
