@@ -32,7 +32,7 @@ const AuthorType = new GraphQLObjectType({
     age: { type: GraphQLInt },
     books: {
       type: new GraphQLList(BookType),
-      resolve: root => Book.findAll({ where: { authorId: parent.id } }),
+      resolve: root => Book.findAll({ where: { authorId: root.id } }),
     },
   }),
 });
@@ -55,7 +55,6 @@ const RootQuery = new GraphQLObjectType({
     },
     authors: {
       type: new GraphQLList(AuthorType),
-      // resolve: () => authors,
       resolve: () => Author.findAll(),
     },
     author: {
