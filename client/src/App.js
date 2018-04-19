@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from 'react-apollo';
-
 import BookList from './components/BookList';
 import AddBook from './components/AddBook';
 
@@ -25,4 +24,3 @@ class App extends Component {
 }
 
 export default App;
-

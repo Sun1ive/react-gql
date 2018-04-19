@@ -2,7 +2,6 @@ import React from 'react';
 import { graphql } from 'react-apollo';
 import { getAuthorsQuery } from '../queries';
 
-
 const AddBook = props => {
   let authors = <option disabled>Authors loading...</option>;
   if (props.data.authors) {
